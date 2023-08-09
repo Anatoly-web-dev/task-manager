@@ -295,10 +295,12 @@ export const tasksControl = function (user, settings) {
                     task.hidden = false;
                     if (!elemBelow) return;
                     let droppableBelow = elemBelow.closest('.tasks');
-                    if (currentDroppable != droppableBelow && droppableBelow == nextTasksList.parentNode) {
+                    if (currentDroppable != droppableBelow) {
                         if (currentDroppable) leaveDroppable(currentDroppable);
                         currentDroppable = droppableBelow;
-                        if (currentDroppable) enterDroppable(currentDroppable);
+                        if (currentDroppable && droppableBelow == nextTasksList.parentNode) {
+                            enterDroppable(currentDroppable);
+                        }
                     }
 
                     task.onmouseup = function () {
@@ -321,6 +323,7 @@ export const tasksControl = function (user, settings) {
                         }
                         if (droppableBelow != nextTasksList.parentNode) {
                             currentTasksList.append(task);
+                            if (currentDroppable) leaveDroppable(currentDroppable);
                         }
                     };
                 }
